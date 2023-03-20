@@ -53,14 +53,10 @@ int main(int argc, char *argsv[]) {
             byte ops = buffer[c + 1];
             assert (MOV_MODE(ops) == REG_TO_REG_MODE);
 
-
-            u32 mov_reg = MOV_REG(ops); // if mov_dir = 0 then mov_reg is the source
-            u32 mov_rm = MOV_RM(ops);   // if mov_dir = 0 then mov_rm is the destination
             bool mov_dir = MOV_DIR(ins); 
-            bool mov_word = MOV_WORD(ins); // mov_word = 0 -> first half of reg_tbl
 
-            byte reg_index[2] = { mov_rm, mov_reg };
-            byte reg_tbl_index = mov_word << 3;
+            byte reg_index[2] = { MOV_RM(ops), MOV_REG(ops) };
+            byte reg_tbl_index = MOV_WORD(ins) << 3;
 
             printf("mov %s, %s\n", reg_tbl[reg_tbl_index + reg_index[mov_dir]], reg_tbl[reg_tbl_index + reg_index[!mov_dir]]);
 
